@@ -1,10 +1,13 @@
 package com.lawencon.hydroponicmonitoring.dao;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.hydroponicmonitoring.models.HydroponicUnit;
+import com.lawencon.hydroponicmonitoring.models.Site;
 
 @Repository
 public class HydroponicUnitDao extends BaseDao{
@@ -18,10 +21,33 @@ public class HydroponicUnitDao extends BaseDao{
         return em.merge(data);
     }
 
-    @SuppressWarnings("unchecked")
     public List<HydroponicUnit> getAll(){
-        final String sql = "SELECT * FROM t_hydroponic_unit";
-        return em.createNativeQuery(sql, HydroponicUnit.class).getResultList();
+        final String sql = "SELECT hu.id, hu.created_at, hu.unit_name, hu.unit_status, s.id as site_id, s.site_location "
+        + "FROM t_hydroponic_unit hu "
+        + "INNER JOIN t_site s ON hu.site_id = s.id";
+        
+        List<?> results = em.createNativeQuery(sql).getResultList();
+        List<HydroponicUnit> units = new ArrayList<>();
+
+        if(results!=null&& results.size()>0){
+            results.forEach(result->{
+                final Object[] objects  = (Object[]) result;
+                final HydroponicUnit unit = new HydroponicUnit();
+                unit.setId(objects[0].toString());
+                unit.setCreatedAt(Timestamp.valueOf(objects[1].toString()).toLocalDateTime());
+                unit.setUnitName(objects[2].toString());
+                unit.setUnitStatus(Boolean.valueOf(objects[3].toString()));
+
+                final Site site = new Site();
+                site.setId(objects[4].toString());
+                site.setSiteLocation(objects[5].toString());
+
+                unit.setSite(site);
+
+                units.add(unit);
+            });
+        }
+        return units;
     }
 
     public HydroponicUnit getById(String id){
@@ -30,10 +56,33 @@ public class HydroponicUnitDao extends BaseDao{
         return hydroponicUnit;
     }
 
-    @SuppressWarnings("unchecked")
     public List<HydroponicUnit> getAllBySite(String siteId){
-        final String sql = "SELECT * FROM t_hydroponic_unit hu INNER JOIN t_site s ON hu.site_id = s.id WHERE hu.site_id = :siteId";
-        final List<HydroponicUnit> results = em.createNativeQuery(sql, HydroponicUnit.class).setParameter("siteId",siteId).getResultList();
-        return results;
+        final String sql = "SELECT hu.id as unit_id, hu.created_at, hu.unit_name, hu.unit_status, s.id as site_id, s.site_location "
+        + "FROM t_hydroponic_unit hu "
+        + "INNER JOIN t_site s ON hu.site_id = s.id "
+        + "WHERE site_id = :siteId";
+        
+        List<?> results = em.createNativeQuery(sql).setParameter("siteId", siteId).getResultList();
+        List<HydroponicUnit> units = new ArrayList<>();
+
+        if(results!=null&& results.size()>0){
+            results.forEach(result->{
+                final Object[] objects  = (Object[]) result;
+                final HydroponicUnit unit = new HydroponicUnit();
+                unit.setId(objects[0].toString());
+                unit.setCreatedAt(Timestamp.valueOf(objects[1].toString()).toLocalDateTime());
+                unit.setUnitName(objects[2].toString());
+                unit.setUnitStatus(Boolean.valueOf(objects[3].toString()));
+
+                final Site site = new Site();
+                site.setId(objects[4].toString());
+                site.setSiteLocation(objects[5].toString());
+
+                unit.setSite(site);
+
+                units.add(unit);
+            });
+        }
+        return units;
     }
 }
