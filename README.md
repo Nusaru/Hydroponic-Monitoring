@@ -74,7 +74,7 @@ GET /sites/search?site=
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `site`      | `string` | **Required, Case-Sensitive**. Site location search query|
+| `site`      | `string` | **Required, Case-Insensitive**. Site location search query|
 
 #### Response
 ```
@@ -192,7 +192,7 @@ GET /units/search?unit=
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `unit`      | `string` | **Required, Case-Sensitive**. Unit name search query|
+| `unit`      | `string` | **Required, Case-Insensitive**. Unit name search query|
 
 #### Response
 ```
