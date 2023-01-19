@@ -73,7 +73,7 @@ public class SiteService {
         final List<SiteDataResDto> dataResDtos = new ArrayList<>();
 
         sites.stream()
-        .filter(site->site.getSiteLocation().contains(query))
+        .filter(site->site.getSiteLocation().toLowerCase().contains(query.toLowerCase()))
         .forEach(site->{
             final SiteDataResDto dataResDto = new SiteDataResDto();
             dataResDto.setId(site.getId());

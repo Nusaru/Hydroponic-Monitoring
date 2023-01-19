@@ -81,7 +81,7 @@ public class HydroponicUnitService {
         final List<HydroponicUnit> units = hydroponicUnitDao.getAll();
         final List<HydroponicUnitDataResDto> dataResDtos = new ArrayList<>();
         units.stream()
-        .filter(unit->unit.getUnitName().contains(query)).
+        .filter(unit->unit.getUnitName().toLowerCase().contains(query.toLowerCase())).
         forEach(unit -> {
             final HydroponicUnitDataResDto dataResDto = new HydroponicUnitDataResDto();
             dataResDto.setCreatedAt(unit.getCreatedAt().toString());
