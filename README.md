@@ -18,12 +18,13 @@ git clone https://github.com/Nusaru/Hydroponic-Monitoring.git
 - Create a PostgreSQL Database with the name "Hydroponic".
   - Make sure the database setting at application.properties are correct.
   - You can use other name, but you need to change the datasource in the application.properties.
-- Run the project. Upon the first run, the table will automatically created in the previously created database.
+- Run the project. Upon the first run, the tables will automatically created in the previously created database.
 
 ## API Documentation
 Swagger Open API Documentation. To use this, you must run the application.
-- http://localhost:8080/swagger-ui/index.html
-
+```
+http://localhost:8080/swagger-ui/index.html
+```
 ### Sites
 #### Request
 ```http
@@ -285,3 +286,87 @@ PUT /units
 }
 ```
 -------
+
+### Unit Data
+#### Request
+```http
+GET /unit-datas
+```
+#### Response
+```
+{
+  "data": [
+    {
+      "id": "string",
+      "unitName": "string",
+      "siteLocation": "string",
+      "ph": 0,
+      "electricalConductivity": 0,
+      "totalDisolvedSolids": 0,
+      "waterTemp": 0,
+      "createdAt": "string"
+    }
+  ]
+}
+```
+-------
+
+#### Request
+This will fetch sensor reading from a Hydroponic unit
+```http
+GET /unit-datas/unit/{id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `UUID string` | **Required**. Units id to fetch|
+
+#### Response
+```
+{
+  "data": [
+    {
+      "id": "string",
+      "unitName": "string",
+      "siteLocation": "string",
+      "ph": 0,
+      "electricalConductivity": 0,
+      "totalDisolvedSolids": 0,
+      "waterTemp": 0,
+      "createdAt": "string"
+    }
+  ]
+}
+```
+-------
+
+#### Request
+```http
+POST /unit-datas
+```
+#### Request Body
+```
+{
+  "unitId": "string",
+  "ph": 0,
+  "electricalConductivity": 0,
+  "totalDisolvedSolids": 0,
+  "waterTemp": 0
+}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `unitId`      | `UUID string` | **Required**. Hydroponic unit Id|
+| `ph`      | `number` | **Required**. Value of pH reading from sensor|
+| `electricalConductivity`      | `number` | **Required**. Value of Electrical Conductivity from sensor reading|
+| `totalDisolvedSolids`      | `number` | **Required**. Value of Total Disolved Solids from sensor reading|
+| `waterTemp`      | `number` | **Required**. Value of Water Temperature from sensor reading|
+
+#### Response
+```
+{
+  "data": {},
+  "message": "string"
+}
+```
