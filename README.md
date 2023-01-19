@@ -42,6 +42,8 @@ GET /sites
   ]
 }
 ```
+-------
+
 #### Request
 ```http
 GET /sites/{id}
@@ -62,7 +64,7 @@ GET /sites/{id}
   }
 }
 ```
-
+-------
 #### Request
 ```http
 GET /sites/search?site=
@@ -84,7 +86,7 @@ GET /sites/search?site=
   }
 }
 ```
-
+-------
 #### Request
 ```http
 POST /sites
@@ -109,7 +111,7 @@ POST /sites
   "message": "string"
 }
 ```
-
+-------
 #### Request
 ```http
 PUT /sites
@@ -136,3 +138,150 @@ PUT /sites
   "message": "string"
 }
 ```
+-------
+
+### Hydroponic Unit
+#### Request
+```http
+GET /units
+```
+#### Response
+```
+{
+  "data": [
+    {
+      "id": "string",
+      "createdAt": "string",
+      "siteLocation": "string",
+      "unitName": "string",
+      "unitStatus": true
+    }
+  ]
+}
+```
+-------
+
+#### Request
+```http
+GET /units/{id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `UUID string` | **Required**. Units id to fetch|
+
+#### Response
+```
+{
+  "data": {
+    "id": "string",
+    "createdAt": "string",
+    "siteLocation": "string",
+    "unitName": "string",
+    "unitStatus": true
+  }
+}
+```
+-------
+#### Request
+```http
+GET /units/search?unit=
+
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `unit`      | `string` | **Required, Case-Sensitive**. Unit name search query|
+
+#### Response
+```
+{
+  "data": {
+    "id": "string",
+    "createdAt": "string",
+    "siteLocation": "string",
+    "unitName": "string",
+    "unitStatus": true
+  }
+}
+```
+-------
+#### Request
+This will fetch list of units from a site
+```http
+GET /units/site/{id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `UUID string` | **Required**. Units id to fetch|
+
+#### Response
+```
+{
+  "data": [
+    {
+      "id": "string",
+      "createdAt": "string",
+      "siteLocation": "string",
+      "unitName": "string",
+      "unitStatus": true
+    }
+  ]
+}
+```
+-------
+#### Request
+```http
+POST /units
+```
+#### Request Body
+```
+{
+  "siteId": "string",
+  "unitName": "string",
+  "unitStatus": true
+}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `siteId`      | `UUID string` | **Required**. Site Location Id|
+| `unitName`      | `string` | **Required**. Hydroponic unit name|
+| `unitStatus`      | `boolean` | **Required**. Hydroponic unit status|
+
+#### Response
+```
+{
+  "data": {},
+  "message": "string"
+}
+```
+-------
+#### Request
+```http
+PUT /units
+```
+#### Request Body
+```
+{
+  "id": "string",
+  "unitName": "string",
+  "unitStatus": true
+}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `UUID string` | **Required**. Hydroponic unit id to edit|
+| `unitName`      | `string` | **Required**. Hydroponic unit location|
+| `unitStatus`      | `boolean` | **Required**. Hydroponic unit status|
+
+#### Response
+```
+{
+  "data": {},
+  "message": "string"
+}
+```
+-------
